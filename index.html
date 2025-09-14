@@ -1,0 +1,1972 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Abad Ali - .NET Developer</title>
+    <link rel="icon" type="image/jpg" href="Icon.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root[data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #e2e8f0;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --accent-primary: #3b82f6;
+            --accent-secondary: #06b6d4;
+            --accent-hover: #2563eb;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --card-bg: #ffffff;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --code-bg: #f1f5f9;
+            --navbar-bg: rgba(255, 255, 255, 0.95);
+            --code-color: rgba(0, 0, 0, 0.5);
+        }
+
+        :root[data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent-primary: #60a5fa;
+            --accent-secondary: #22d3ee;
+            --accent-hover: #3b82f6;
+            --border-color: #334155;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            --card-bg: #1e293b;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --code-bg: #1e293b;
+            --navbar-bg: rgba(15, 23, 42, 0.95);
+            --code-color: rgba(235, 235, 235, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* Code Animation Background */
+        .code-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .code-line {
+            position: absolute;
+            top: -50px;
+            color: var(--code-color);
+            opacity: 0.1;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            animation: float-down linear;
+            white-space: nowrap;
+        }
+
+        @keyframes float-down {
+            from {
+                transform: translateY(100vh) translateX(0);
+            }
+            to {
+                transform: translateY(-100%) translateX(100px);
+            }
+        }
+
+        /* Navigation */
+        #navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--navbar-bg);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-icons {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        [data-theme="light"] .dark-icons { display: none; }
+        [data-theme="dark"] .light-icons { display: none; }
+
+        #nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        #nav-menu a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        #nav-menu a:hover {
+            color: var(--accent-primary);
+        }
+
+        #nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-primary);
+            transition: width 0.3s ease;
+        }
+
+        #nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-primary);
+            transition: 0.3s;
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 2rem 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        #about {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 160px;
+            align-items: center;
+        }
+
+        .about-text h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 3s ease infinite;
+        }
+
+        .about-text .tagline {
+            font-size: 1.3rem;
+            color: var(--accent-primary);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .specialization {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--accent-primary);
+        }
+
+        .specialization h3 {
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-btn {
+            display: inline-block;
+            background: var(--gradient);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .profile-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .laptop-container {
+            perspective: 1000px;
+            position: relative;
+        }
+
+        .laptop {
+            width: 400px;
+            height: 250px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateY(-10deg) rotateX(10deg);
+            transition: transform 0.3s ease;
+        }
+
+        .laptop:hover {
+            transform: rotateY(-15deg) rotateX(5deg);
+        }
+
+        .laptop-screen {
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .laptop-screen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        /* Portfolio Section */
+        #portfolio {
+            background: var(--bg-secondary);
+            min-height: 90vh;
+        }
+
+        .portfolio-container h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .tab-btn {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-group {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .skill-group:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-group h3 {
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skill-group i {
+            font-size: 1.5rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-content h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            background: var(--accent-primary);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        /* Work Experience Section */
+        #experience {
+            background: var(--bg-primary);
+        }
+
+        .experience-container h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        .experience-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .experience-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        .experience-duration {
+            background: var(--bg-secondary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .achievements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .achievement {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .achievement i {
+            color: var(--accent-primary);
+            font-size: 1.2rem;
+        }
+
+        /* Code Samples Section */
+        #code-samples .code-container {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .code-labels {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .code-label {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .code-label.active, .code-label:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .code-display {
+            background: var(--code-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .code-card {
+            display: none;
+            text-align: left;
+            width: 100%;
+        }
+
+        .code-card.active {
+            display: block;
+        }
+
+        .code-card img {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 10px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .code-block {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            overflow-x: auto;
+            color: var(--text-primary);
+        }
+
+        /* Blog Section */
+        #blog {
+            background: var(--bg-secondary);
+        }
+
+        .blog-container h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        .blog-article {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .blog-article h3 {
+            font-size: 2rem;
+            color: var(--accent-primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .blog-article p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .blog-highlights {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .blog-highlights ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .blog-highlights li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .blog-highlights li i {
+            color: var(--accent-primary);
+            width: 20px;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: var(--bg-primary);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-info h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+        }
+
+        .contact-item i {
+            background: var(--accent-primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.2rem;
+        }
+
+        .contact-form {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-form h3 {
+            color: var(--accent-primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .submit-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .close-modal:hover {
+            color: var(--accent-primary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--accent-primary);
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+            background: var(--accent-hover);
+        }
+
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            #nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--navbar-bg);
+                flex-direction: column;
+                align-items: center;
+                justify-content: start;
+                padding-top: 2rem;
+                transition: left 0.3s ease;
+            }
+
+            #nav-menu.active {
+                left: 0;
+            }
+
+            .about-container, .contact-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-text h1 {
+                font-size: 2.5rem;
+            }
+
+            section {
+                padding: 60px 1rem 40px;
+            }
+
+            .skills-grid, .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .code-labels {
+                gap: 0.5rem;
+            }
+
+            .code-label {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Code Animation Background -->
+    <div class="code-background" id="codeBackground"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="theme-toggle" onclick="toggleTheme()">
+                    <div class="theme-icons">
+                        <div class="light-icons">
+                            <i class="fas fa-sun" style="color: #fbbf24;"></i>
+                            <i class="fas fa-seedling" style="color: #10b981; font-size: 0.8rem;"></i>
+                            <i class="fas fa-flower-tulip" style="color: #f59e0b; font-size: 0.7rem;"></i>
+                        </div>
+                        <div class="dark-icons">
+                            <i class="fas fa-moon" style="color: #60a5fa;"></i>
+                            <i class="fas fa-star" style="color: #fbbf24; font-size: 0.6rem;"></i>
+                            <i class="fas fa-cloud" style="color: #94a3b8; font-size: 0.8rem;"></i>
+                        </div>
+                    </div>
+                </div>
+                <span>.NET Developer</span>
+            </div>
+            <ul id="nav-menu">
+                <li><a href="#about">About</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#experience">Overview</a></li>
+                <li><a href="#code-samples">Code Snippets</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#contact">Get In Touch</a></li>
+            </ul>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- About Section -->
+    <section id="about" class="fade-in">
+        <div class="about-container">
+            <div class="about-text">
+                <h1>Muhammad Abad Ali</h1>
+                <p class="tagline">"Code, debug, deploy, repeat — that's my rhythm."</p>
+                <div class="specialization">
+                    <h3><i class="fab fa-microsoft"></i> .NET Specialization</h3>
+                    <p>Expert in ASP.NET Core, Entity Framework, Clean Architecture, CQRS, and microservices. Focused on performance optimization, scalability, and enterprise-grade applications that align with business goals. Adept at leading teams, mentoring developers, and delivering enterprise-grade applications that align with business goals. Passionate about problem-solving, modern web technologies, and creating impactful digital products.</p>
+                </div>
+                
+                <a href="#contact" class="profile-btn">Get In Touch</a>
+            </div>
+            <div class="laptop-container">
+                <div class="laptop">
+                    <div class="laptop-screen">
+                        <img src="profile.jpg" alt="Muhammad Abad Ali" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="fade-in">
+        <div class="portfolio-container">
+            <h2>Portfolio</h2>
+            
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showTab('skills')">Skills</button>
+                <button class="tab-btn" onclick="showTab('projects')">Projects</button>
+            </div>
+
+            <!-- Skills Tab -->
+            <div id="skills-tab" class="tab-content active">
+                <div class="skills-grid">
+                    <div class="skill-group">
+                        <h3><i class="fab fa-microsoft"></i> Core .NET Stack</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">C#</span>
+                            <span class="skill-tag">.NET Framework</span>
+                            <span class="skill-tag">ASP.NET Core</span>
+                            <span class="skill-tag">Entity Framework</span>
+                            <span class="skill-tag">Dapper</span>
+                        </div>
+                    </div>
+                    <div class="skill-group">
+                        <h3><i class="fas fa-database"></i> Databases</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">SQL Server</span>
+                            <span class="skill-tag">PostgreSQL</span>
+                            <span class="skill-tag">Redis</span>
+                            <span class="skill-tag">MongoDB</span>
+                        </div>
+                    </div>
+                    <div class="skill-group">
+                        <h3><i class="fas fa-code"></i> Frontend Technologies</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">HTML5</span>
+                            <span class="skill-tag">CSS3</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">TypeScript</span>
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Angular</span>
+                        </div>
+                    </div>
+                    <div class="skill-group">
+                        <h3><i class="fas fa-tools"></i> Development Tools</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">GitHub</span>
+                            <span class="skill-tag">Azure</span>
+                            <span class="skill-tag">Visual Studio</span>
+                            <span class="skill-tag">Docker</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects Tab -->
+            <div id="projects-tab" class="tab-content">
+                <div class="projects-grid">
+                    <div class="project-card" onclick="openModal('stitch-seek')">
+                        <img src="StichSeekImage.jpg" alt="Stitch Seek">
+                        <div class="project-content">
+                            <h3>Stitch Seek</h3>
+                            <p>A centralized platform for customers and tailors to modernize the stitching industry with real-time booking and payment integration.</p>
+                            <div class="tech-stack">
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">ASP.NET Core</span>
+                                <span class="tech-tag">PostgreSQL</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card" onclick="openModal('hrms-saas')">
+                        <img src="hrms.png" alt="HRMS SaaS">
+                        <div class="project-content">
+                            <h3>HRMS SaaS Platform</h3>
+                            <p>Comprehensive Human Resource Management System with multi-tenant architecture, payroll processing, and advanced analytics.</p>
+                            <div class="tech-stack">
+                                <span class="tech-tag">ASP.NET Core</span>
+                                <span class="tech-tag">Angular</span>
+                                <span class="tech-tag">SQL Server</span>
+                                <span class="tech-tag">Azure</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card" onclick="openModal('bareeze')">
+                        <img src="ConsolePic.gif" alt="Bareeze Shopping">
+                        <div class="project-content">
+                            <h3>Bareeze Shopping Cart</h3>
+                            <p>Console-based shopping cart application demonstrating advanced OOP principles and design patterns.</p>
+                            <div class="tech-stack">
+                                <span class="tech-tag">C++</span>
+                                <span class="tech-tag">OOP</span>
+                                <span class="tech-tag">Design Patterns</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Experience Section -->
+    <section id="experience" class="fade-in">
+        <div class="experience-container">
+            <h2>Work Experience</h2>
+            <div class="experience-card">
+                <div class="experience-header">
+                    <div class="experience-title">.NET Developer</div>
+                    <div class="experience-duration">6 Months</div>
+                </div>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    Contributed to enterprise-level applications with focus on clean architecture, performance optimization, and scalable solutions.
+                </p>
+                <div class="achievements">
+                    <div class="achievement">
+                        <i class="fas fa-rocket"></i>
+                        <span>Improved application performance by 40% through database optimization</span>
+                    </div>
+                    <div class="achievement">
+                        <i class="fas fa-code-branch"></i>
+                        <span>Implemented clean architecture patterns reducing code complexity</span>
+                    </div>
+                    <div class="achievement">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Enhanced security protocols and authentication systems</span>
+                    </div>
+                    <div class="achievement">
+                        <i class="fas fa-users"></i>
+                        <span>Mentored junior developers in .NET best practices</span>
+                    </div>
+                    <div class="achievement">
+                        <i class="fas fa-bug"></i>
+                        <span>Resolved 95% of critical bugs within 24 hours</span>
+                    </div>
+                    <div class="achievement">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Delivered features 30% faster using agile methodologies</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Samples Section -->
+    <section id="code-samples" class="fade-in">
+        <div class="code-container">
+            <h2 style="font-size: 2.5rem; text-align: center; margin-bottom: 3rem; color: var(--text-primary);">Code Snippets</h2>
+            
+            <div class="code-labels">
+                <div class="code-label active" onclick="showCode('csharp')">C#</div>
+                <div class="code-label" onclick="showCode('angular')">Angular</div>
+                <div class="code-label" onclick="showCode('react')">React</div>
+                <div class="code-label" onclick="showCode('sql')">SQL</div>
+            </div>
+            
+            <div class="code-display">
+                <!-- C# Code Sample -->
+                <div id="csharp-code" class="code-card active">
+                    <div class="code-block">
+                        <pre>
+// Clean Architecture - Repository Pattern Implementation
+public interface IGenericRepository&lt;T&gt; where T : class
+{
+    Task&lt;IEnumerable&lt;T&gt;&gt; GetAllAsync();
+    Task&lt;T&gt; GetByIdAsync(int id);
+    Task&lt;T&gt; AddAsync(T entity);
+    Task UpdateAsync(T entity);
+    Task DeleteAsync(int id);
+}
+
+public class GenericRepository&lt;T&gt; : IGenericRepository&lt;T&gt; where T : class
+{
+    private readonly AppDbContext _context;
+    private readonly DbSet&lt;T&gt; _dbSet;
+
+    public GenericRepository(AppDbContext context)
+    {
+        _context = context;
+        _dbSet = context.Set&lt;T&gt;();
+    }
+
+    public async Task&lt;IEnumerable&lt;T&gt;&gt; GetAllAsync()
+    {
+        return await _dbSet.ToListAsync();
+    }
+
+    public async Task&lt;T&gt; GetByIdAsync(int id)
+    {
+        return await _dbSet.FindAsync(id);
+    }
+
+    public async Task&lt;T&gt; AddAsync(T entity)
+    {
+        await _dbSet.AddAsync(entity);
+        await _context.SaveChangesAsync();
+        return entity;
+    }
+
+    public async Task UpdateAsync(T entity)
+    {
+        _dbSet.Update(entity);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        var entity = await GetByIdAsync(id);
+        if (entity != null)
+        {
+            _dbSet.Remove(entity);
+            await _context.SaveChangesAsync();
+        }
+    }
+}
+
+// CQRS Pattern - Command Handler
+public record CreateUserCommand(string Name, string Email) : IRequest&lt;UserDto&gt;;
+
+public class CreateUserCommandHandler : IRequestHandler&lt;CreateUserCommand, UserDto&gt;
+{
+    private readonly IGenericRepository&lt;User&gt; _userRepository;
+    private readonly IMapper _mapper;
+
+    public CreateUserCommandHandler(IGenericRepository&lt;User&gt; userRepository, IMapper mapper)
+    {
+        _userRepository = userRepository;
+        _mapper = mapper;
+    }
+
+    public async Task&lt;UserDto&gt; Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    {
+        var user = new User 
+        { 
+            Name = request.Name, 
+            Email = request.Email,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        var createdUser = await _userRepository.AddAsync(user);
+        return _mapper.Map&lt;UserDto&gt;(createdUser);
+    }
+}
+                        </pre>
+                    </div>
+                </div>
+
+                <!-- Angular Code Sample -->
+                <div id="angular-code" class="code-card">
+                    <div class="code-block">
+                        <pre>
+// Angular Service with HTTP Client
+@Injectable({
+  providedIn: 'root'
+})
+export class UserService {
+  private apiUrl = 'https://api.example.com/users';
+
+  constructor(private http: HttpClient) {}
+
+  getUsers(): Observable&lt;User[]&gt; {
+    return this.http.get&lt;User[]&gt;(this.apiUrl).pipe(
+      catchError(this.handleError&lt;User[]&gt;('getUsers', []))
+    );
+  }
+
+  getUserById(id: number): Observable&lt;User&gt; {
+    return this.http.get&lt;User&gt;(`${this.apiUrl}/${id}`).pipe(
+      catchError(this.handleError&lt;User&gt;(`getUserById id=${id}`))
+    );
+  }
+
+  createUser(user: CreateUserDto): Observable&lt;User&gt; {
+    return this.http.post&lt;User&gt;(this.apiUrl, user, this.httpOptions).pipe(
+      catchError(this.handleError&lt;User&gt;('createUser'))
+    );
+  }
+
+  updateUser(user: User): Observable&lt;User&gt; {
+    return this.http.put&lt;User&gt;(`${this.apiUrl}/${user.id}`, user, this.httpOptions).pipe(
+      catchError(this.handleError&lt;User&gt;('updateUser'))
+    );
+  }
+
+  deleteUser(id: number): Observable&lt;void&gt; {
+    return this.http.delete&lt;void&gt;(`${this.apiUrl}/${id}`).pipe(
+      catchError(this.handleError&lt;void&gt;('deleteUser'))
+    );
+  }
+
+  private handleError&lt;T&gt;(operation = 'operation', result?: T) {
+    return (error: any): Observable&lt;T&gt; =&gt; {
+      console.error(`${operation} failed: ${error.message}`);
+      return of(result as T);
+    };
+  }
+}
+
+// Angular Component with Reactive Forms
+@Component({
+  selector: 'app-user-form',
+  template: `
+    &lt;form [formGroup]="userForm" (ngSubmit)="onSubmit()"&gt;
+      &lt;mat-form-field&gt;
+        &lt;input matInput placeholder="Name" formControlName="name"&gt;
+        &lt;mat-error *ngIf="userForm.get('name')?.hasError('required')"&gt;
+          Name is required
+        &lt;/mat-error&gt;
+      &lt;/mat-form-field&gt;
+      
+      &lt;mat-form-field&gt;
+        &lt;input matInput type="email" placeholder="Email" formControlName="email"&gt;
+        &lt;mat-error *ngIf="userForm.get('email')?.hasError('email')"&gt;
+          Please enter a valid email
+        &lt;/mat-error&gt;
+      &lt;/mat-form-field&gt;
+      
+      &lt;button mat-raised-button type="submit" [disabled]="userForm.invalid"&gt;
+        Submit
+      &lt;/button&gt;
+    &lt;/form&gt;
+  `
+})
+export class UserFormComponent implements OnInit {
+  userForm: FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService
+  ) {
+    this.userForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.email]]
+    });
+  }
+
+  onSubmit(): void {
+    if (this.userForm.valid) {
+      this.userService.createUser(this.userForm.value).subscribe(
+        (user) =&gt; console.log('User created:', user),
+        (error) =&gt; console.error('Error creating user:', error)
+      );
+    }
+  }
+}
+                        </pre>
+                    </div>
+                </div>
+
+                <!-- React Code Sample -->
+                <div id="react-code" class="code-card">
+                    <div class="code-block">
+                        <pre>
+// React Custom Hook for API calls
+import { useState, useEffect } from 'react';
+
+export const useApi = &lt;T,&gt;(url: string) =&gt; {
+  const [data, setData] = useState&lt;T | null&gt;(null);
+  const [loading, setLoading] = useState&lt;boolean&gt;(true);
+  const [error, setError] = useState&lt;string | null&gt;(null);
+
+  useEffect(() =&gt; {
+    const fetchData = async () =&gt; {
+      try {
+        setLoading(true);
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+        setData(result);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An error occurred');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [url]);
+
+  return { data, loading, error };
+};
+
+// React Component with TypeScript
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+interface UserListProps {
+  onUserSelect: (user: User) =&gt; void;
+}
+
+const UserList: React.FC&lt;UserListProps&gt; = ({ onUserSelect }) =&gt; {
+  const { data: users, loading, error } = useApi&lt;User[]&gt;('/api/users');
+
+  if (loading) return &lt;div className="loading"&gt;Loading users...&lt;/div&gt;;
+  if (error) return &lt;div className="error"&gt;Error: {error}&lt;/div&gt;;
+  if (!users) return &lt;div&gt;No users found&lt;/div&gt;;
+
+  return (
+    &lt;div className="user-list"&gt;
+      {users.map(user =&gt; (
+        &lt;div 
+          key={user.id} 
+          className="user-card"
+          onClick={() =&gt; onUserSelect(user)}
+        &gt;
+          &lt;h3&gt;{user.name}&lt;/h3&gt;
+          &lt;p&gt;{user.email}&lt;/p&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+};
+
+// Context Provider Pattern
+interface UserContextType {
+  users: User[];
+  selectedUser: User | null;
+  selectUser: (user: User) =&gt; void;
+  addUser: (user: Omit&lt;User, 'id'&gt;) =&gt; void;
+}
+
+const UserContext = createContext&lt;UserContextType | undefined&gt;(undefined);
+
+export const UserProvider: React.FC&lt;{ children: React.ReactNode }&gt; = ({ children }) =&gt; {
+  const [users, setUsers] = useState&lt;User[]&gt;([]);
+  const [selectedUser, setSelectedUser] = useState&lt;User | null&gt;(null);
+
+  const selectUser = useCallback((user: User) =&gt; {
+    setSelectedUser(user);
+  }, []);
+
+  const addUser = useCallback((newUser: Omit&lt;User, 'id'&gt;) =&gt; {
+    const user: User = {
+      ...newUser,
+      id: Date.now() // Simple ID generation
+    };
+    setUsers(prev =&gt; [...prev, user]);
+  }, []);
+
+  const value = useMemo(() =&gt; ({
+    users,
+    selectedUser,
+    selectUser,
+    addUser
+  }), [users, selectedUser, selectUser, addUser]);
+
+  return (
+    &lt;UserContext.Provider value={value}&gt;
+      {children}
+    &lt;/UserContext.Provider&gt;
+  );
+};
+
+export const useUserContext = () =&gt; {
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error('useUserContext must be used within a UserProvider');
+  }
+  return context;
+};
+                        </pre>
+                    </div>
+                </div>
+
+                <!-- SQL Code Sample -->
+                <div id="sql-code" class="code-card">
+                    <div class="code-block">
+                        <pre>
+-- Database Schema Design
+CREATE TABLE Users (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(100) NOT NULL,
+    Email NVARCHAR(255) NOT NULL UNIQUE,
+    PasswordHash NVARCHAR(255) NOT NULL,
+    CreatedAt DATETIME2 DEFAULT GETUTCDATE(),
+    UpdatedAt DATETIME2 DEFAULT GETUTCDATE(),
+    IsActive BIT DEFAULT 1
+);
+
+CREATE TABLE UserProfiles (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    UserId INT NOT NULL,
+    FirstName NVARCHAR(50),
+    LastName NVARCHAR(50),
+    PhoneNumber NVARCHAR(20),
+    DateOfBirth DATE,
+    ProfilePicture NVARCHAR(500),
+    FOREIGN KEY (UserId) REFERENCES Users(Id) ON DELETE CASCADE
+);
+
+-- Complex Query with CTEs and Window Functions
+WITH UserStats AS (
+    SELECT 
+        u.Id,
+        u.Name,
+        u.Email,
+        COUNT(o.Id) as OrderCount,
+        SUM(o.TotalAmount) as TotalSpent,
+        AVG(o.TotalAmount) as AvgOrderValue,
+        MAX(o.CreatedAt) as LastOrderDate,
+        ROW_NUMBER() OVER (ORDER BY SUM(o.TotalAmount) DESC) as SpendingRank
+    FROM Users u
+    LEFT JOIN Orders o ON u.Id = o.UserId
+    WHERE u.IsActive = 1
+    GROUP BY u.Id, u.Name, u.Email
+),
+RecentActivity AS (
+    SELECT 
+        UserId,
+        COUNT(*) as RecentOrderCount
+    FROM Orders 
+    WHERE CreatedAt >= DATEADD(MONTH, -3, GETUTCDATE())
+    GROUP BY UserId
+)
+SELECT 
+    us.Id,
+    us.Name,
+    us.Email,
+    us.OrderCount,
+    us.TotalSpent,
+    us.AvgOrderValue,
+    us.LastOrderDate,
+    us.SpendingRank,
+    COALESCE(ra.RecentOrderCount, 0) as RecentOrders,
+    CASE 
+        WHEN us.TotalSpent > 1000 THEN 'Premium'
+        WHEN us.TotalSpent > 500 THEN 'Gold'
+        WHEN us.TotalSpent > 100 THEN 'Silver'
+        ELSE 'Bronze'
+    END as CustomerTier
+FROM UserStats us
+LEFT JOIN RecentActivity ra ON us.Id = ra.UserId
+WHERE us.OrderCount > 0
+ORDER BY us.SpendingRank;
+
+-- Stored Procedure for User Management
+CREATE PROCEDURE sp_GetUserAnalytics
+    @StartDate DATE = NULL,
+    @EndDate DATE = NULL,
+    @CustomerTier NVARCHAR(20) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    DECLARE @DefaultStartDate DATE = DATEADD(YEAR, -1, GETUTCDATE());
+    DECLARE @DefaultEndDate DATE = GETUTCDATE();
+    
+    SET @StartDate = COALESCE(@StartDate, @DefaultStartDate);
+    SET @EndDate = COALESCE(@EndDate, @DefaultEndDate);
+    
+    WITH OrderData AS (
+        SELECT 
+            u.Id as UserId,
+            u.Name,
+            u.Email,
+            o.TotalAmount,
+            o.CreatedAt,
+            ROW_NUMBER() OVER (PARTITION BY u.Id ORDER BY o.CreatedAt DESC) as OrderRank
+        FROM Users u
+        INNER JOIN Orders o ON u.Id = o.UserId
+        WHERE o.CreatedAt BETWEEN @StartDate AND @EndDate
+            AND u.IsActive = 1
+    ),
+    UserMetrics AS (
+        SELECT 
+            UserId,
+            Name,
+            Email,
+            COUNT(*) as OrderCount,
+            SUM(TotalAmount) as TotalSpent,
+            AVG(TotalAmount) as AvgOrderValue,
+            MIN(CreatedAt) as FirstOrderDate,
+            MAX(CreatedAt) as LastOrderDate,
+            CASE 
+                WHEN SUM(TotalAmount) > 1000 THEN 'Premium'
+                WHEN SUM(TotalAmount) > 500 THEN 'Gold'
+                WHEN SUM(TotalAmount) > 100 THEN 'Silver'
+                ELSE 'Bronze'
+            END as CustomerTier
+        FROM OrderData
+        GROUP BY UserId, Name, Email
+    )
+    SELECT 
+        um.*,
+        DATEDIFF(DAY, um.FirstOrderDate, um.LastOrderDate) as CustomerLifespanDays,
+        CASE 
+            WHEN DATEDIFF(DAY, um.LastOrderDate, GETUTCDATE()) <= 30 THEN 'Active'
+            WHEN DATEDIFF(DAY, um.LastOrderDate, GETUTCDATE()) <= 90 THEN 'At Risk'
+            ELSE 'Inactive'
+        END as CustomerStatus
+    FROM UserMetrics um
+    WHERE (@CustomerTier IS NULL OR um.CustomerTier = @CustomerTier)
+    ORDER BY um.TotalSpent DESC;
+END;
+
+-- Index Optimization
+CREATE NONCLUSTERED INDEX IX_Orders_UserId_CreatedAt 
+ON Orders (UserId, CreatedAt) 
+INCLUDE (TotalAmount);
+
+CREATE NONCLUSTERED INDEX IX_Users_Email_IsActive 
+ON Users (Email, IsActive) 
+WHERE IsActive = 1;
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="fade-in">
+        <div class="blog-container">
+            <h2>Why .NET? The Developer's Ultimate Choice</h2>
+            <div class="blog-article">
+                <h3>The Power of .NET in Modern Development</h3>
+                
+                <p>In today's rapidly evolving tech landscape, choosing the right technology stack can make or break your project. As a passionate .NET developer, I've witnessed firsthand how this robust framework transforms ideas into scalable, enterprise-grade solutions.</p>
+                
+                <p><strong>Why .NET stands out from the crowd?</strong> It's not just about writing code—it's about crafting solutions that stand the test of time. .NET offers unparalleled performance, cross-platform compatibility, and a rich ecosystem that empowers developers to build everything from microservices to full-scale enterprise applications.</p>
+                
+                <div class="blog-highlights">
+                    <h4 style="color: var(--accent-primary); margin-bottom: 1rem;">Key Advantages of .NET:</h4>
+                    <ul>
+                        <li><i class="fas fa-rocket"></i><strong>Performance Excellence:</strong> Native compilation and optimized runtime deliver lightning-fast applications</li>
+                        <li><i class="fas fa-globe"></i><strong>Cross-Platform Power:</strong> Write once, run anywhere - Windows, Linux, macOS, and cloud</li>
+                        <li><i class="fas fa-shield-alt"></i><strong>Enterprise Security:</strong> Built-in security features and regular updates ensure robust protection</li>
+                        <li><i class="fas fa-puzzle-piece"></i><strong>Rich Ecosystem:</strong> Vast library support, NuGet packages, and active community</li>
+                        <li><i class="fas fa-chart-line"></i><strong>Scalability:</strong> From small apps to enterprise solutions handling millions of requests</li>
+                        <li><i class="fas fa-code"></i><strong>Developer Productivity:</strong> IntelliSense, strong typing, and excellent tooling accelerate development</li>
+                    </ul>
+                </div>
+                
+                <p>The versatility of .NET is truly remarkable. Whether you're building RESTful APIs with ASP.NET Core, creating responsive web applications with Blazor, or developing cloud-native solutions with Azure integration, .NET provides the tools and frameworks to excel.</p>
+                
+                <p>What motivates me most about .NET is its continuous evolution. Microsoft's commitment to open-source development, regular updates, and community feedback ensures that .NET stays ahead of industry trends. The introduction of .NET 6, 7, and 8 with their unified platform approach demonstrates how the framework adapts to modern development needs.</p>
+                
+                <p><strong>The future belongs to those who choose .NET.</strong> Its combination of performance, security, scalability, and developer experience makes it the ideal choice for businesses looking to build reliable, maintainable, and future-proof applications. When you choose .NET, you're not just selecting a framework—you're investing in a technology that grows with your ambitions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="fade-in">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Get In Touch</h2>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <strong>Email</strong><br>
+                        <a href="mailto:abad01644@gmail.com" style="color: var(--text-secondary); text-decoration: none;">abad01644@gmail.com</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <strong>Phone</strong><br>
+                        <a href="tel:03224681328" style="color: var(--text-secondary); text-decoration: none;">03224681328</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <strong>Location</strong><br>
+                        Available remotely and on-site
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <strong>Response Time</strong><br>
+                        Within 24 hours
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <h3>Send Message</h3>
+                <form action="https://api.web3forms.com/submit" method="POST" id="contact-form">
+                    <input type="hidden" name="access_key" value="44af45cf-167c-4747-a487-382377b1b1e9">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Modals -->
+    <div id="stitch-seek-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('stitch-seek')">&times;</span>
+            <h2>Stitch Seek</h2>
+            <img src="StichSeekImage.jpg" alt="Stitch Seek Full" style="width: 100%; border-radius: 10px; margin: 20px 0;">
+            <p>A comprehensive platform designed to revolutionize the traditional tailoring industry by connecting customers with skilled tailors through modern technology. This final year project showcases full-stack development capabilities with a focus on user experience and scalability.</p>
+            <h4>Key Features:</h4>
+            <ul style="margin: 20px 0; padding-left: 20px;">
+                <li>Real-time tailor search and booking system</li>
+                <li>Secure payment integration</li>
+                <li>Customer review and rating system</li>
+                <li>Responsive design for all devices</li>
+            </ul>
+            <div style="margin-top: 30px;">
+                <a href="http://localhost:3000/" class="profile-btn" style="margin-right: 15px;">Live Demo</a>
+                <a href="#" class="profile-btn">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="hrms-saas-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('hrms-saas')">&times;</span>
+            <h2>HRMS SaaS Platform</h2>
+            <img src="hrms.png" alt="HRMS SaaS Full" style="width: 100%; border-radius: 10px; margin: 20px 0;">
+            <p>A comprehensive Human Resource Management System built with multi-tenant architecture, designed to serve multiple organizations with customizable workflows, advanced analytics, and seamless integration capabilities.</p>
+            <h4>Technical Highlights:</h4>
+            <ul style="margin: 20px 0; padding-left: 20px;">
+                <li>Multi-tenant architecture with data isolation</li>
+                <li>Advanced payroll processing with tax calculations</li>
+                <li>Real-time employee performance analytics</li>
+                <li>Role-based access control and security</li>
+                <li>RESTful APIs for third-party integrations</li>
+                <li>Automated reporting and compliance management</li>
+            </ul>
+            <h4>Key Features:</h4>
+            <ul style="margin: 20px 0; padding-left: 20px;">
+                <li>Employee lifecycle management</li>
+                <li>Leave and attendance tracking</li>
+                <li>Performance evaluation systems</li>
+                <li>Document management with version control</li>
+            </ul>
+            <div style="margin-top: 30px;">
+                <a href="#" class="profile-btn" style="margin-right: 15px;">View Demo</a>
+                <a href="#" class="profile-btn">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="bareeze-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('bareeze')">&times;</span>
+            <h2>Bareeze Shopping Cart</h2>
+            <img src="ConsolePic.gif" alt="Bareeze Full" style="width: 100%; border-radius: 10px; margin: 20px 0;">
+            <p>A console-based shopping cart application that demonstrates strong object-oriented programming principles and efficient data management. This project showcases clean code architecture and modular design patterns.</p>
+            <h4>Technical Highlights:</h4>
+            <ul style="margin: 20px 0; padding-left: 20px;">
+                <li>Object-oriented design with inheritance and polymorphism</li>
+                <li>Efficient data structures for inventory management</li>
+                <li>File-based persistence layer</li>
+                <li>User authentication and session management</li>
+            </ul>
+            <div style="margin-top: 30px;">
+                <a href="#" class="profile-btn">View on GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/muhammad-abad-ali-883471289" target="_blank" title="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://github.com/AbadAli-Git" target="_blank" title="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://www.instagram.com/i_m_aleeeee" target="_blank" title="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+        <p>&copy; 2025 Muhammad Abad Ali. All rights reserved. Built with passion and code.</p>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/923224681328" class="whatsapp-float" target="_blank" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp" style="font-size: 30px;"></i>
+    </a>
+
+    <script>
+        // Code Animation Background
+        const codeSnippets = [
+            'public class Developer { }',
+            'using System.Linq;',
+            'async Task<IActionResult> GetData()',
+            'services.AddDbContext<AppDbContext>();',
+            'var result = await _repository.GetAllAsync();',
+            'app.UseAuthentication();',
+            '[HttpGet("api/users")]',
+            'builder.Services.AddScoped<IUserService, UserService>();',
+            'return Ok(new { success = true });',
+            'protected override void OnModelCreating()',
+            'public interface IRepository<T> where T : class',
+            'await context.SaveChangesAsync();',
+            'app.MapControllers();',
+            'services.AddCors(options => { });',
+            'var connectionString = Configuration.GetConnectionString("DefaultConnection");'
+        ];
+
+        function createCodeLine() {
+            const codeBackground = document.getElementById('codeBackground');
+            const codeLine = document.createElement('div');
+            codeLine.className = 'code-line';
+            codeLine.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+            codeLine.style.left = Math.random() * 100 + '%';
+            codeLine.style.animationDuration = (15 + Math.random() * 10) + 's';
+            codeLine.style.opacity = Math.random() * 0.5 + 0.1;
+            codeBackground.appendChild(codeLine);
+            
+            setTimeout(() => codeLine.remove(), 25000);
+        }
+
+        // Create code lines periodically
+        setInterval(createCodeLine, 1000);
+
+        // Theme Toggle Function
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('nav-menu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    document.getElementById('nav-menu').classList.remove('active');
+                }
+            });
+        });
+
+        // Tab Functionality
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        // Code Sample Functions
+        function showCode(language) {
+            // Hide all code cards
+            document.querySelectorAll('.code-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Remove active class from all labels
+            document.querySelectorAll('.code-label').forEach(label => {
+                label.classList.remove('active');
+            });
+            
+            // Show selected code card
+            document.getElementById(language + '-code').classList.add('active');
+            
+            // Add active class to clicked label
+            event.target.classList.add('active');
+        }
+
+        // Modal Functions
+        function openModal(projectName) {
+            document.getElementById(projectName + '-modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(projectName) {
+            document.getElementById(projectName + '-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on outside click
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Enhanced Contact Form with EmailJS
+        
+
+        // Enhanced animations and interactions
+        document.querySelectorAll('.skill-group').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('i');
+                if (icon) {
+                    icon.style.transform = 'scale(1.2) rotate(5deg)';
+                    icon.style.transition = 'transform 0.3s ease';
+                }
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                const icon = this.querySelector('i');
+                if (icon) {
+                    icon.style.transform = 'scale(1) rotate(0deg)';
+                }
+            });
+        });
+
+        // Enhanced Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections for fade-in animation
+        document.querySelectorAll('.fade-in').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Add CSS animation for fade-in
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Add loading animation for better UX
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '1';
+            document.body.style.transition = 'opacity 0.3s ease';
+        });
+
+        // Initialize with opacity 0
+        document.body.style.opacity = '0';
+
+        // Add scroll progress indicator
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            
+            let progressBar = document.getElementById('scroll-progress');
+            if (!progressBar) {
+                progressBar = document.createElement('div');
+                progressBar.id = 'scroll-progress';
+                progressBar.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: ${scrollPercent}%;
+                    height: 3px;
+                    background: var(--gradient);
+                    z-index: 10001;
+                    transition: width 0.1s ease;
+                `;
+                document.body.appendChild(progressBar);
+            } else {
+                progressBar.style.width = scrollPercent + '%';
+            }
+        });
+    </script>
+</body>
+</html>
